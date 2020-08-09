@@ -17,4 +17,9 @@
             <class name = "ApiTests.GetPostsWithParamCountTest" />
         </classes>
     </test>
+    <test name = "GET Specific Post Test">
+        <classes>
+            <class name = "ApiTests.GetSpecificPostTest" />
+        </classes>
+    </test>
 </suite>

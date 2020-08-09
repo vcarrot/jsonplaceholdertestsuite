@@ -29,10 +29,22 @@ public class JsonHelpers {
         return size;
     }
 
+    public static String jsonValueFromKey(String jsonBody, String desiredKey){
+        JSONObject jsonObj = stringToJsonObject(jsonBody);
+        String value = jsonObj.get(desiredKey).toString();
+        return value;
+    }
+
     private static JSONArray stringToJsonArray(String responseBody){
         JSONTokener jsonTokener = new JSONTokener(responseBody);
         JSONArray jsonArray = new JSONArray(jsonTokener);
         return jsonArray;
+    }
+
+    private static JSONObject stringToJsonObject(String responseBody){
+        JSONTokener jsonTokener = new JSONTokener(responseBody);
+        JSONObject jsonObj = new JSONObject(jsonTokener);
+        return jsonObj;
     }
 
     private static Schema createSchemaObject(String schemaFilePath) {

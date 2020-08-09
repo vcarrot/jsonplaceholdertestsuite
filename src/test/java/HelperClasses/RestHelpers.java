@@ -22,7 +22,14 @@ public class RestHelpers {
     public static String getPostsBody(int userId){
         //overloads above method to grab all posts from a specific userId
         String userIdUriString = basePostsURI + "?userId=" + String.valueOf(userId);
-        Response response = getResponseFromURI(basePostsURI);
+        Response response = getResponseFromURI(userIdUriString);
+        String responseBody = response.getBody().asString();
+        return responseBody;
+    }
+
+    public static String getSpecificPostBody(int postId){
+        String specificPostUriString = basePostsURI + "/" + String.valueOf(postId);
+        Response response = getResponseFromURI(specificPostUriString);
         String responseBody = response.getBody().asString();
         return responseBody;
     }
