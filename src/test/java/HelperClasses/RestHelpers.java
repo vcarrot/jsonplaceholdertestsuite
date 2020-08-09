@@ -17,28 +17,25 @@ public class RestHelpers {
 
     // GET Posts methods //
     public static String getPostsBody(){
-        Response response = getResponseFromURI(basePostsURI);
-        String responseBody = response.getBody().asString();
+        String responseBody = responseFromURI(basePostsURI, "GET").getBody().asString();
         return responseBody;
     }
 
     public static String getPostsBody(int userId){
         //overloads above method to grab all posts from a specific userId
         String userIdUriString = basePostsURI + "?userId=" + String.valueOf(userId);
-        Response response = getResponseFromURI(userIdUriString);
-        String responseBody = response.getBody().asString();
+        String responseBody = responseFromURI(userIdUriString, "GET").getBody().asString();
         return responseBody;
     }
 
     public static String getSpecificPostBody(int postId){
         String specificPostUriString = basePostsURI + "/" + String.valueOf(postId);
-        Response response = getResponseFromURI(specificPostUriString);
-        String responseBody = response.getBody().asString();
+        String responseBody = responseFromURI(specificPostUriString, "GET").getBody().asString();
         return responseBody;
     }
 
     public static int getPostsStatusCode(){
-        Response response = getResponseFromURI(basePostsURI);
+        Response response = responseFromURI(basePostsURI, "GET");
         int statusCode = response.getStatusCode();
         return statusCode;
     }
@@ -47,15 +44,45 @@ public class RestHelpers {
 
     public static int getCommentsStatusCode(int postId){
         String commentsURI = buildCommentsURI(postId);
-        Response response = getResponseFromURI(commentsURI);
-        int statusCode = response.getStatusCode();
+        int statusCode = responseFromURI(commentsURI, "GET").getStatusCode();
         return statusCode;
     }
 
     public static String getCommentsBody(int postId){
         String commentsURI = buildCommentsURI(postId);
-        Response response = getResponseFromURI(commentsURI);
-        String responseBody = response.getBody().asString();
+        String responseBody = responseFromURI(commentsURI, "GET").getBody().asString();
+        return responseBody;
+    }
+
+    // POST and PUT Posts Methods //
+
+    public static int postPostsStatusCode(Map<String,String> myMap){
+        int statusCode = responseFromURI(basePostsURI, myMap, "POST").getStatusCode();
+        return statusCode;
+    }
+
+    public static String postPostsResponseBody(Map<String,String> myMap){
+        String responseBody = responseFromURI(basePostsURI, myMap, "POST").getBody().asString();
+        return responseBody;
+    }
+
+    public static int putPostUpdateStatusCode(Map<String,String> myMap,int postId){
+        String specificPostURI = basePostsURI + "/" + String.valueOf(postId);
+        int statusCode = responseFromURI(specificPostURI, myMap, "PUT").getStatusCode();
+        return statusCode;
+    }
+
+    public static String putPostUpdateResponseBody(Map<String,String> myMap,int postId) {
+        String specificPostURI = basePostsURI + "/" + String.valueOf(postId);
+        String responseBody = responseFromURI(specificPostURI, myMap, "PUT").getBody().asString();
+        return responseBody;
+    }
+
+    // PUT and POST Comments Methods //
+
+    public static String postCommentsResponseBody(Map<String,String> myMap, int postId){
+        String commentsURI = buildCommentsURI(postId);
+        String responseBody = responseFromURI(commentsURI, myMap, "POST").getBody().asString();
         return responseBody;
     }
 
@@ -64,39 +91,38 @@ public class RestHelpers {
         return commentsURI;
     }
 
-    private static Response getResponseFromURI(String uriString){
+    // private methods go below here
+
+    private static Response responseFromURI(String uriString, String callType){
+        //to be used for GET and DELETE methods
         RestAssured.baseURI = uriString;
         RequestSpecification httpRequest = RestAssured.given();
-        Response response = httpRequest.request(Method.GET);
+        Response response = null;
+        switch(callType){
+            case "GET":
+                response = httpRequest.request(Method.GET);
+                break;
+            case "DELETE":
+                response = httpRequest.request(Method.DELETE);
+                break;
+        }
         return response;
     }
 
-    // POST and PUT Posts Methods //
-
-    public static int postPostsStatusCode(Map<String,String> myMap){
-        Response response = postResponseFromURI(basePostsURI, myMap);
-        int statusCode = response.getStatusCode();
-        return statusCode;
-    }
-
-    public static String postPostsResponseBody(Map<String,String> myMap){
-        Response response = postResponseFromURI(basePostsURI, myMap);
-        String responseBody = response.getBody().asString();
-        return responseBody;
-    }
-
-    public static int putPostUpdateStatusCode(Map<String,String> myMap,int postId){
-        String specificPostURI = basePostsURI + "/" + String.valueOf(postId);
-        Response response = putResponseFromURI(specificPostURI, myMap);
-        int statusCode = response.getStatusCode();
-        return statusCode;
-    }
-
-    public static String putPostUpdateResponseBody(Map<String,String> myMap,int postId) {
-        String specificPostURI = basePostsURI + "/" + String.valueOf(postId);
-        Response response = putResponseFromURI(specificPostURI, myMap);
-        String responseBody = response.getBody().asString();
-        return responseBody;
+    private static Response responseFromURI(String uriString, Map<String,String> myMap, String callType){
+        //to be used for PUT and POST methods
+        RestAssured.baseURI = uriString;
+        RequestSpecification request = mapToRequest(myMap);
+        Response response = null;
+        switch(callType){
+            case "PUT":
+                response = request.request(Method.PUT);
+                break;
+            case "POST":
+                response = request.request(Method.POST);
+                break;
+        }
+        return response;
     }
 
     private static RequestSpecification mapToRequest(Map<String,String> myMap){
@@ -105,29 +131,6 @@ public class RestHelpers {
         request.header("Content-type", "application/json; charset=UTF-8");
         request.body(jsonObj.toString());
         return request;
-    }
-
-    // PUT and POST Comments Methods //
-
-    public static String postCommentsResponseBody(Map<String,String> myMap, int postId){
-        String commentsURI = buildCommentsURI(postId);
-        Response response = postResponseFromURI(commentsURI, myMap);
-        String responseBody = response.getBody().asString();
-        return responseBody;
-    }
-
-    private static Response postResponseFromURI(String uriString, Map<String,String> myMap){
-        RestAssured.baseURI = uriString;
-        RequestSpecification request = mapToRequest(myMap);
-        Response response = request.request(Method.POST);
-        return response;
-    }
-
-    private static Response putResponseFromURI(String uriString, Map<String,String> myMap){
-        RestAssured.baseURI = uriString;
-        RequestSpecification request = mapToRequest(myMap);
-        Response response = request.request(Method.PUT);
-        return response;
     }
 
 
