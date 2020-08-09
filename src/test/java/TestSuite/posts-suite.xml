@@ -1,0 +1,15 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name = "Posts Suite">
+    <test name = "Status Code Test">
+        <classes>
+            <class name = "ApiTests.GetPostsStatusCodeTest" />
+        </classes>
+    </test>
+    <test name = "Verify Schema Test">
+        <classes>
+            <class name = "ApiTests.GetPostsJsonSchemaTest" />
+        </classes>
+    </test>
+</suite>
