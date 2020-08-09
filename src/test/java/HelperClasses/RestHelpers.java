@@ -52,6 +52,13 @@ public class RestHelpers {
         return statusCode;
     }
 
+    public static String getCommentsBody(int postId){
+        String commentsURI = buildCommentsURI(postId);
+        Response response = getResponseFromURI(commentsURI);
+        String responseBody = response.getBody().asString();
+        return responseBody;
+    }
+
     private static String buildCommentsURI(int postId){
         String commentsURI = basePostsURI + "/" + String.valueOf(postId) + "/comments";
         return commentsURI;

@@ -47,4 +47,10 @@
             <class name = "ApiTests.GetCommentsStatusCodeTest" />
         </classes>
     </test>
+    <test name = "GET Comments Schema Test">
+        <classes>
+            <class name = "ApiTests.GetCommentsJsonSchemaTest" />
+        </classes>
+    </test>
+
 </suite>

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://jsonplaceholder.typicode.com/posts/postId/comments",
+  "title": "Comments",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "postId": {
+        "type": "integer"
+      },
+      "id": {
+        "type": "integer",
+        "uniqueItems": true
+      },
+      "name": {
+        "type": "string"
+      },
+      "body": {
+        "type": "string"
+      }
+    }
+  }
+}
