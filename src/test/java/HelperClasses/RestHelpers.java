@@ -50,12 +50,18 @@ public class RestHelpers {
         return response;
     }
 
-    // POST Methods //
+    // POST and PUT Methods //
 
     public static int postPostsStatusCode(Map<String,String> myMap){
         Response response = postResponseFromURI(basePostsURI, myMap);
         int statusCode = response.getStatusCode();
         return statusCode;
+    }
+
+    public static String postPostsResponseBody(Map<String,String> myMap){
+        Response response = postResponseFromURI(basePostsURI, myMap);
+        String responseBody = response.getBody().asString();
+        return responseBody;
     }
 
     private static RequestSpecification mapToRequest(Map<String,String> myMap){

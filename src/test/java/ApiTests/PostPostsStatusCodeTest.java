@@ -1,4 +1,4 @@
-/* This tests checks the status code returned from a valid POST call */
+/* This tests checks the status code returned from a valid POST call to add a new post */
 package ApiTests;
 
 import org.testng.annotations.*;
