@@ -42,4 +42,9 @@
             <class name = "ApiTests.PutUpdatePostResponseBodyTest" />
         </classes>
     </test>
+    <test name = "GET Comments Status Code Test">
+        <classes>
+            <class name = "ApiTests.GetCommentsStatusCodeTest" />
+        </classes>
+    </test>
 </suite>
