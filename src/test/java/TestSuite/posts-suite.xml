@@ -2,14 +2,24 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name = "Posts Suite">
-    <test name = "Status Code Test">
+    <test name = "GET Status Code Test">
         <classes>
             <class name = "ApiTests.GetPostsStatusCodeTest" />
         </classes>
     </test>
-    <test name = "Verify Schema Test">
+    <test name = "GET Verify Schema Test">
         <classes>
             <class name = "ApiTests.GetPostsJsonSchemaTest" />
+        </classes>
+    </test>
+    <test name = "GET Count of Filtered Response Test">
+        <classes>
+            <class name = "ApiTests.GetPostsWithParamCountTest" />
+        </classes>
+    </test>
+    <test name = "GET Specific Post Test">
+        <classes>
+            <class name = "ApiTests.GetSpecificPostTest" />
         </classes>
     </test>
 </suite>
