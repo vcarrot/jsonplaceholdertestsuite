@@ -7,18 +7,24 @@ import io.restassured.RestAssured;
 import io.restassured.specification.*;
 import io.restassured.response.*;
 import io.restassured.http.*;
-import io.restassured.RestAssured.*;
-import org.hamcrest.Matchers.*;
+
 
 public class RestHelpers {
-    public static boolean RestHelperMethod(){
-        RestAssured.baseURI = "http://dummy.restapiexample.com/api/v1";
-        RequestSpecification httpRequest = RestAssured.given();
-        Response response = httpRequest.request(Method.GET, "/employees");
 
+    public static String getPostsBody(){
+        RestAssured.baseURI = "https://jsonplaceholder.typicode.com/posts";
+        RequestSpecification httpRequest = RestAssured.given();
+        Response response = httpRequest.request(Method.GET);
         String responseBody = response.getBody().asString();
-        System.out.println("Response Body is =>  " + responseBody);
-        return responseBody.isEmpty();
+        return responseBody;
+    }
+
+    public static int getPostsStatusCode(){
+        RestAssured.baseURI = "https://jsonplaceholder.typicode.com/posts";
+        RequestSpecification httpRequest = RestAssured.given();
+        Response response = httpRequest.request(Method.GET);
+        int statusCode = response.getStatusCode();
+        return statusCode;
     }
 
 }
