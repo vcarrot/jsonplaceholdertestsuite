@@ -7,12 +7,15 @@ import io.restassured.RestAssured;
 import io.restassured.specification.*;
 import io.restassured.response.*;
 import io.restassured.http.*;
+import org.json.*;
+import java.util.*;
 
 
 public class RestHelpers {
 
     public static String basePostsURI = "https://jsonplaceholder.typicode.com/posts";
 
+    // GET methods //
     public static String getPostsBody(){
         Response response = getResponseFromURI(basePostsURI);
         String responseBody = response.getBody().asString();
@@ -46,5 +49,57 @@ public class RestHelpers {
         Response response = httpRequest.request(Method.GET);
         return response;
     }
+
+    // POST and PUT Methods //
+
+    public static int postPostsStatusCode(Map<String,String> myMap){
+        Response response = postResponseFromURI(basePostsURI, myMap);
+        int statusCode = response.getStatusCode();
+        return statusCode;
+    }
+
+    public static String postPostsResponseBody(Map<String,String> myMap){
+        Response response = postResponseFromURI(basePostsURI, myMap);
+        String responseBody = response.getBody().asString();
+        return responseBody;
+    }
+
+    public static int putPostUpdateStatusCode(Map<String,String> myMap,int postId){
+        String specificPostURI = basePostsURI + "/" + String.valueOf(postId);
+        Response response = putResponseFromURI(specificPostURI, myMap);
+        int statusCode = response.getStatusCode();
+        return statusCode;
+    }
+
+    public static String putPostUpdateResponseBody(Map<String,String> myMap,int postId) {
+        String specificPostURI = basePostsURI + "/" + String.valueOf(postId);
+        Response response = putResponseFromURI(specificPostURI, myMap);
+        String responseBody = response.getBody().asString();
+        return responseBody;
+    }
+
+    private static RequestSpecification mapToRequest(Map<String,String> myMap){
+        JSONObject jsonObj = JsonHelpers.jsonObjectFromMap(myMap);
+        RequestSpecification request = RestAssured.given();
+        request.header("Content-type", "application/json; charset=UTF-8");
+        request.body(jsonObj.toString());
+        return request;
+    }
+
+    private static Response postResponseFromURI(String uriString, Map<String,String> myMap){
+        RestAssured.baseURI = uriString;
+        RequestSpecification request = mapToRequest(myMap);
+        Response response = request.request(Method.POST);
+        return response;
+    }
+
+    private static Response putResponseFromURI(String uriString, Map<String,String> myMap){
+        RestAssured.baseURI = uriString;
+        RequestSpecification request = mapToRequest(myMap);
+        Response response = request.request(Method.PUT);
+        return response;
+    }
+
+
 
 }
