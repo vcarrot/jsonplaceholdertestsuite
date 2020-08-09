@@ -52,5 +52,10 @@
             <class name = "ApiTests.GetCommentsJsonSchemaTest" />
         </classes>
     </test>
+    <test name = "POST Comments Response Body Test">
+        <classes>
+            <class name = "ApiTests.PostCommentResponseBodyTest" />
+        </classes>
+    </test>
 
 </suite>

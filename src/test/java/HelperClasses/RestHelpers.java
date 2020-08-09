@@ -43,7 +43,7 @@ public class RestHelpers {
         return statusCode;
     }
 
-    //GET Comments Methods
+    //GET Comments Methods //
 
     public static int getCommentsStatusCode(int postId){
         String commentsURI = buildCommentsURI(postId);
@@ -105,6 +105,15 @@ public class RestHelpers {
         request.header("Content-type", "application/json; charset=UTF-8");
         request.body(jsonObj.toString());
         return request;
+    }
+
+    // PUT and POST Comments Methods //
+
+    public static String postCommentsResponseBody(Map<String,String> myMap, int postId){
+        String commentsURI = buildCommentsURI(postId);
+        Response response = postResponseFromURI(commentsURI, myMap);
+        String responseBody = response.getBody().asString();
+        return responseBody;
     }
 
     private static Response postResponseFromURI(String uriString, Map<String,String> myMap){
