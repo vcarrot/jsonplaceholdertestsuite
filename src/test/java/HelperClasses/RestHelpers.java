@@ -15,7 +15,7 @@ public class RestHelpers {
 
     public static String basePostsURI = "https://jsonplaceholder.typicode.com/posts";
 
-    // GET methods //
+    // GET Posts methods //
     public static String getPostsBody(){
         Response response = getResponseFromURI(basePostsURI);
         String responseBody = response.getBody().asString();
@@ -43,6 +43,27 @@ public class RestHelpers {
         return statusCode;
     }
 
+    //GET Comments Methods //
+
+    public static int getCommentsStatusCode(int postId){
+        String commentsURI = buildCommentsURI(postId);
+        Response response = getResponseFromURI(commentsURI);
+        int statusCode = response.getStatusCode();
+        return statusCode;
+    }
+
+    public static String getCommentsBody(int postId){
+        String commentsURI = buildCommentsURI(postId);
+        Response response = getResponseFromURI(commentsURI);
+        String responseBody = response.getBody().asString();
+        return responseBody;
+    }
+
+    private static String buildCommentsURI(int postId){
+        String commentsURI = basePostsURI + "/" + String.valueOf(postId) + "/comments";
+        return commentsURI;
+    }
+
     private static Response getResponseFromURI(String uriString){
         RestAssured.baseURI = uriString;
         RequestSpecification httpRequest = RestAssured.given();
@@ -50,7 +71,7 @@ public class RestHelpers {
         return response;
     }
 
-    // POST and PUT Methods //
+    // POST and PUT Posts Methods //
 
     public static int postPostsStatusCode(Map<String,String> myMap){
         Response response = postResponseFromURI(basePostsURI, myMap);
@@ -86,6 +107,15 @@ public class RestHelpers {
         return request;
     }
 
+    // PUT and POST Comments Methods //
+
+    public static String postCommentsResponseBody(Map<String,String> myMap, int postId){
+        String commentsURI = buildCommentsURI(postId);
+        Response response = postResponseFromURI(commentsURI, myMap);
+        String responseBody = response.getBody().asString();
+        return responseBody;
+    }
+
     private static Response postResponseFromURI(String uriString, Map<String,String> myMap){
         RestAssured.baseURI = uriString;
         RequestSpecification request = mapToRequest(myMap);
@@ -99,7 +129,6 @@ public class RestHelpers {
         Response response = request.request(Method.PUT);
         return response;
     }
-
 
 
 }
