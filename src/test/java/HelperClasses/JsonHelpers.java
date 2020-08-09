@@ -23,6 +23,12 @@ public class JsonHelpers {
         return true;
     }
 
+    public static int jsonArraySize(String responseBody){
+        JSONArray jsonArray = stringToJsonArray(responseBody);
+        int size = jsonArray.length();
+        return size;
+    }
+
     private static JSONArray stringToJsonArray(String responseBody){
         JSONTokener jsonTokener = new JSONTokener(responseBody);
         JSONArray jsonArray = new JSONArray(jsonTokener);
