@@ -32,4 +32,10 @@
             <class name = "ApiTests.PostPostsResponseBodyTest" />
         </classes>
     </test>
+    <test name = "PUT Update Status Code Test">
+        <classes>
+            <class name = "ApiTests.PutUpdatePostStatusCodeTest" />
+        </classes>
+    </test>
+
 </suite>

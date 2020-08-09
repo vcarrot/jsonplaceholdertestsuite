@@ -18,5 +18,4 @@ public class PostPostsStatusCodeTest {
         int returnStatusCode = RestHelpers.postPostsStatusCode(postMap);
         Assert.assertEquals(returnStatusCode,201, "POST /posts returns incorrect status code after posting valid response");
     }
-
 }
