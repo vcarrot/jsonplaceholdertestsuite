@@ -71,6 +71,13 @@ public class RestHelpers {
         return statusCode;
     }
 
+    public static String putPostUpdateResponseBody(Map<String,String> myMap,int postId) {
+        String specificPostURI = basePostsURI + "/" + String.valueOf(postId);
+        Response response = putResponseFromURI(specificPostURI, myMap);
+        String responseBody = response.getBody().asString();
+        return responseBody;
+    }
+
     private static RequestSpecification mapToRequest(Map<String,String> myMap){
         JSONObject jsonObj = JsonHelpers.jsonObjectFromMap(myMap);
         RequestSpecification request = RestAssured.given();

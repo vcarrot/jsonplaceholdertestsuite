@@ -37,5 +37,9 @@
             <class name = "ApiTests.PutUpdatePostStatusCodeTest" />
         </classes>
     </test>
-
+    <test name = "PUT Update Response Body Test">
+        <classes>
+            <class name = "ApiTests.PutUpdatePostResponseBodyTest" />
+        </classes>
+    </test>
 </suite>
