@@ -22,4 +22,9 @@
             <class name = "ApiTests.GetSpecificPostTest" />
         </classes>
     </test>
+    <test name = "POST Posts Status Code Response Test">
+        <classes>
+            <class name = "ApiTests.PostPostsStatusCodeTest" />
+        </classes>
+    </test>
 </suite>

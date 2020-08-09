@@ -9,6 +9,7 @@ import org.everit.json.schema.loader.SchemaLoader;
 import org.json.*;
 import java.io.*;
 import java.io.FileInputStream;
+import java.util.*;
 
 
 public class JsonHelpers {
@@ -34,6 +35,13 @@ public class JsonHelpers {
         String value = jsonObj.get(desiredKey).toString();
         return value;
     }
+
+    public static JSONObject jsonObjectFromMap(Map<String,String> myMap){
+        JSONObject jsonObj = new JSONObject(myMap);
+        return jsonObj;
+    }
+
+    //private methods go below here
 
     private static JSONArray stringToJsonArray(String responseBody){
         JSONTokener jsonTokener = new JSONTokener(responseBody);
